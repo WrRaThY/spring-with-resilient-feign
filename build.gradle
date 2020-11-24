@@ -1,0 +1,33 @@
+plugins {
+    id 'java'
+}
+
+group 'priv.rdo'
+version '1.0-SNAPSHOT'
+sourceCompatibility = '15'
+
+repositories {
+    mavenCentral()
+}
+
+
+
+dependencies {
+    implementation platform("org.springframework.boot:spring-boot-dependencies:2.3.5.RELEASE")
+    implementation platform("org.springframework.cloud:spring-cloud-dependencies:Hoxton.SR8")
+
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation "org.springframework.cloud:spring-cloud-starter-openfeign"
+    implementation "org.springframework.boot:spring-boot-starter-actuator"
+
+    implementation "io.github.resilience4j:resilience4j-spring-boot2:1.6.1"
+}
+
+compileJava {
+    options.compilerArgs += ["--enable-preview"]
+}
+
+test {
+    jvmArgs(['--enable-preview'])
+    useJUnitPlatform()
+}

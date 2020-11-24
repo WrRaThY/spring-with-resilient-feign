@@ -1,0 +1,22 @@
+spring:
+  profiles:
+    include: resilience
+    #that's a nice little trick to separate configs into different files. not super needed here, but it's just a habit.
+
+server:
+  port: 8080
+
+feign:
+  client:
+    config:
+      default:
+        loggerLevel: basic
+        connectTimeout: ${HTTP_TIMEOUT:5000}
+        readTimeout: ${HTTP_TIMEOUT:5000}
+
+#u can set client logging per environment or from environment variables or do whatever u please. bottom line is - it's configurable
+logging:
+  level.priv.rdo.FailingClient: ERROR
+  level.priv.rdo.WorkingClient: DEBUG
+  level.circuitBreakerState: DEBUG
+  level.circuitBreakerRetry: DEBUG

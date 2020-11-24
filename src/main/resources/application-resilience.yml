@@ -1,0 +1,25 @@
+#docs for config props: https://resilience4j.readme.io/docs/circuitbreaker#create-and-configure-a-circuitbreaker
+
+resilience4j.circuitbreaker:
+  configs:
+    default:
+      slidingWindowSize: 3 #window for which the below settings are checked, number of requests. super low for demo purposes
+      failureRateThreshold: 100 #percent. 100 just to prove a point
+  instances:
+    FailingClient:
+      baseConfig: default
+    WorkingClient:
+      baseConfig: default
+
+resilience4j.retry:
+  configs:
+    default:
+      maxRetryAttempts: 5 #higher than circuit breaker windows size for demo purposes
+      waitDuration: 500 #ms. u can also play with exponential backoff and stuff
+      retryExceptions:
+        - feign.FeignException
+  instances:
+    FailingClient:
+      baseConfig: default
+    WorkingClient:
+      baseConfig: default

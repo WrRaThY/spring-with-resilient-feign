@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <springProperty scope="context" name="spring.application.name" source="spring.application.name"/>
+
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+
+    <!--
+    the important bit is:
+    [%X{circuitBreakerName}:%X{circuitBreakerEventType}]
+    it's a really stupid usage, but shows what can be done
+    -->
+    <property name="CLASSIC_LOG_PATTERN"
+              value="%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr([%thread]){blue} %clr(%-5level) %clr(${PID:- }){magenta} %clr(---){faint} %clr(%-40.40logger{39}){cyan}.%clr(%M:){faint} [%X{circuitBreakerName}:%X{circuitBreakerEventType}] %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"
+    />
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${CLASSIC_LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+    </root>
+</configuration>
