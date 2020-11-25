@@ -5,6 +5,7 @@ resilience4j.circuitbreaker:
     default:
       slidingWindowSize: 3 #window for which the below settings are checked, number of requests. super low for demo purposes
       failureRateThreshold: 100 #percent. 100 just to prove a point
+      registerHealthIndicator: true
   instances:
     FailingClient:
       baseConfig: default
@@ -18,6 +19,7 @@ resilience4j.retry:
       waitDuration: 500 #ms. u can also play with exponential backoff and stuff
       retryExceptions:
         - feign.FeignException
+        # to enable retry on 500s only use that - feign.FeignException.FeignServerException
   instances:
     FailingClient:
       baseConfig: default
